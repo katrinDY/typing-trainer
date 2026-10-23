@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             tabControlMain = new TabControl();
             tabPageExercise = new TabPage();
             richTextBoxTarget = new RichTextBox();
             textBoxInput = new TextBox();
             panelTop = new Panel();
+            buttonStop = new Button();
             buttonStart = new Button();
             textBoxPlayer = new TextBox();
             labelAccuracy = new Label();
@@ -41,6 +43,7 @@
             labelPlayer = new Label();
             tabPageResults = new TabPage();
             tabPageSettings = new TabPage();
+            timerGame = new System.Windows.Forms.Timer(components);
             tabControlMain.SuspendLayout();
             tabPageExercise.SuspendLayout();
             panelTop.SuspendLayout();
@@ -96,9 +99,11 @@
             textBoxInput.Size = new Size(870, 100);
             textBoxInput.TabIndex = 6;
             textBoxInput.TextChanged += textBoxInput_TextChanged;
+            textBoxInput.KeyPress += textBoxInput_KeyPress;
             // 
             // panelTop
             // 
+            panelTop.Controls.Add(buttonStop);
             panelTop.Controls.Add(buttonStart);
             panelTop.Controls.Add(textBoxPlayer);
             panelTop.Controls.Add(labelAccuracy);
@@ -111,6 +116,16 @@
             panelTop.Size = new Size(870, 60);
             panelTop.TabIndex = 0;
             // 
+            // buttonStop
+            // 
+            buttonStop.Location = new Point(322, 16);
+            buttonStop.Name = "buttonStop";
+            buttonStop.Size = new Size(75, 23);
+            buttonStop.TabIndex = 1;
+            buttonStop.Text = "Стоп";
+            buttonStop.UseVisualStyleBackColor = true;
+            buttonStop.Click += buttonStop_Click;
+            // 
             // buttonStart
             // 
             buttonStart.Location = new Point(220, 15);
@@ -119,7 +134,7 @@
             buttonStart.TabIndex = 5;
             buttonStart.Text = "Старт";
             buttonStart.UseVisualStyleBackColor = true;
-            buttonStart.Click += button_Start;
+            buttonStart.Click += button_StartClick;
             // 
             // textBoxPlayer
             // 
@@ -131,7 +146,7 @@
             // labelAccuracy
             // 
             labelAccuracy.AutoSize = true;
-            labelAccuracy.Location = new Point(620, 20);
+            labelAccuracy.Location = new Point(743, 23);
             labelAccuracy.Name = "labelAccuracy";
             labelAccuracy.Size = new Size(78, 15);
             labelAccuracy.TabIndex = 3;
@@ -140,7 +155,7 @@
             // labelSpeed
             // 
             labelSpeed.AutoSize = true;
-            labelSpeed.Location = new Point(450, 20);
+            labelSpeed.Location = new Point(573, 23);
             labelSpeed.Name = "labelSpeed";
             labelSpeed.Size = new Size(124, 15);
             labelSpeed.TabIndex = 2;
@@ -149,7 +164,7 @@
             // labelTime
             // 
             labelTime.AutoSize = true;
-            labelTime.Location = new Point(320, 20);
+            labelTime.Location = new Point(443, 23);
             labelTime.Name = "labelTime";
             labelTime.Size = new Size(75, 15);
             labelTime.TabIndex = 1;
@@ -183,6 +198,11 @@
             tabPageSettings.Text = "Настройки";
             tabPageSettings.UseVisualStyleBackColor = true;
             // 
+            // timerGame
+            // 
+            timerGame.Interval = 1000;
+            timerGame.Tick += timerGame_Tick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -215,5 +235,7 @@
         private Label labelPlayer;
         private RichTextBox richTextBoxTarget;
         private TextBox textBoxInput;
+        private System.Windows.Forms.Timer timerGame;
+        private Button buttonStop;
     }
 }

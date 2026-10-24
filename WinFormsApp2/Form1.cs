@@ -2,14 +2,9 @@ namespace WinFormsApp2
 {
     public partial class Form1 : Form
     {
-        private string[] texts =
-        {
-            "Който рано рани, две сърца носи.",
-            "Капка по капка вир става.",
-            "Бързата работа срам за майстора.",
-            "Каквото посееш, това ще пожънеш.",
-            "Не казвай хоп, преди да си прескочил."
-        };
+        private List<string> availableTexts = new List<string>();
+
+        private string textsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Texts");
 
         private string targetText = "";
         private Random random = new Random();
@@ -22,6 +17,7 @@ namespace WinFormsApp2
         {
             InitializeComponent();
             textBoxInput.Enabled = false;
+            LoadCategories();
         }
 
         private void textBoxInput_TextChanged(object sender, EventArgs e)
@@ -31,7 +27,7 @@ namespace WinFormsApp2
 
             if (started && textBoxInput.Text.Length == targetText.Length)
             {
-                MessageBox.Show("Готово!");
+                EndGame("Готово!");
             }
         }
 
@@ -61,11 +57,11 @@ namespace WinFormsApp2
             for (int i = 0; i < typed.Length && i < targetText.Length; i++)
             {
                 richTextBoxTarget.Select(i, 1);
-                if (typed[i] == targetText[i])
+                if (IsMatch(typed[i], targetText[i]))
                 {
                     richTextBoxTarget.SelectionColor = Color.Green;
                 }
-                else
+                else if (checkBoxShowErrors.Checked)
                 {
                     richTextBoxTarget.SelectionColor = Color.Red;
                     richTextBoxTarget.SelectionBackColor = Color.MistyRose;
@@ -88,7 +84,7 @@ namespace WinFormsApp2
 
             if (timeLimit > 0 && seconds >= timeLimit)
             {
-                EndGame("Времето изтеюе!");
+                EndGame("Времето изтече!");
             }
         }
 
@@ -100,7 +96,7 @@ namespace WinFormsApp2
             }
         }
 
-        private void button_StartClick(object sender, EventArgs e)
+        private void buttonStart_Click(object sender, EventArgs e)
         {
             if (textBoxPlayer.Text.Trim().Length == 0)
             {
@@ -113,7 +109,22 @@ namespace WinFormsApp2
             seconds = 0;
             started = false;
 
-            targetText = texts[random.Next(texts.Length)];
+            if (availableTexts.Count == 0)
+            {
+                MessageBox.Show("Изберете поне една категория от таб 'Настройки'.");
+                return;
+            }
+
+            if (listBoxTexts.SelectedIndex > 0)
+            {
+                targetText = listBoxTexts.SelectedItem?.ToString() ?? "";
+            }
+            else
+            {
+                targetText = availableTexts[random.Next(availableTexts.Count)];
+            }
+
+            timeLimit = GetTimeLimit();
             richTextBoxTarget.Text = targetText;
 
             textBoxInput.Clear();
@@ -132,7 +143,7 @@ namespace WinFormsApp2
             int correct = 0;
             for (int i = 0; i < typed.Length && i < targetText.Length; i++)
             {
-                if (typed[i] == targetText[i])
+                if (IsMatch(typed[i], targetText[i]))
                 {
                     correct++;
                 }
@@ -172,6 +183,73 @@ namespace WinFormsApp2
                 "Скорост: " + CalculateSpeed().ToString("0") + " думи/мин" + Environment.NewLine +
                 "Точност: " + CalculateAccuracy().ToString("0") + " %",
                 "Резултат");
+        }
+
+        private void LoadCategories()
+        {
+            checkedListBoxCategories.Items.Clear();
+
+            if (!Directory.Exists(textsFolder))
+            {
+                MessageBox.Show("Не е намерена папката Texts.");
+                return;
+            }
+
+            foreach (string file in Directory.GetFiles(textsFolder, "*.txt"))
+            {
+                checkedListBoxCategories.Items.Add(Path.GetFileNameWithoutExtension(file), true);
+            }
+
+            FillTexts(null, CheckState.Unchecked);
+        }
+
+        private void FillTexts(int? changeIndex, CheckState newValue)
+        {
+            availableTexts.Clear();
+            listBoxTexts.Items.Clear();
+            listBoxTexts.Items.Add("(случаен текст)");
+
+            for (int i = 0; i < checkedListBoxCategories.Items.Count; i++)
+            {
+                bool isChecked = (i == changeIndex)
+                    ? newValue == CheckState.Checked
+                    : checkedListBoxCategories.GetItemChecked(i);
+
+                if (!isChecked) continue;
+
+                string file = Path.Combine(textsFolder, checkedListBoxCategories.Items[i] + ".txt");
+                foreach (string line in File.ReadAllLines(file))
+                {
+                    if (line.Trim().Length > 0)
+                    {
+                        availableTexts.Add(line.Trim());
+                        listBoxTexts.Items.Add(line.Trim());
+                    }
+                }
+            }
+
+            listBoxTexts.SelectedIndex = 0;
+        }
+
+        private void checkedListBoxCategories_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            FillTexts(e.Index, e.NewValue);
+        }
+
+        private int GetTimeLimit()
+        {
+            if (radioButtonMedium.Checked) return 60;
+            if (radioButtonHard.Checked) return 30;
+            return 0;
+        }
+
+        private bool IsMatch(char typed, char expected)
+        {
+            if (checkBoxCaseSensitive.Checked)
+            {
+                return typed == expected;
+            }
+            return char.ToLower(typed) == char.ToLower(expected);
         }
     }
 }

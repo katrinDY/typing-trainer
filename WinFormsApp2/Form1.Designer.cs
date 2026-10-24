@@ -43,10 +43,24 @@
             labelPlayer = new Label();
             tabPageResults = new TabPage();
             tabPageSettings = new TabPage();
+            labelTexts = new Label();
+            listBoxTexts = new ListBox();
+            labelCategories = new Label();
+            checkedListBoxCategories = new CheckedListBox();
+            groupBoxOptions = new GroupBox();
+            checkBoxShowErrors = new RadioButton();
+            checkBoxCaseSensitive = new RadioButton();
+            groupBoxLevel = new GroupBox();
+            radioButtonHard = new RadioButton();
+            radioButtonMedium = new RadioButton();
+            radioButtonEasy = new RadioButton();
             timerGame = new System.Windows.Forms.Timer(components);
             tabControlMain.SuspendLayout();
             tabPageExercise.SuspendLayout();
             panelTop.SuspendLayout();
+            tabPageSettings.SuspendLayout();
+            groupBoxOptions.SuspendLayout();
+            groupBoxLevel.SuspendLayout();
             SuspendLayout();
             // 
             // tabControlMain
@@ -134,7 +148,7 @@
             buttonStart.TabIndex = 5;
             buttonStart.Text = "Старт";
             buttonStart.UseVisualStyleBackColor = true;
-            buttonStart.Click += button_StartClick;
+            buttonStart.Click += buttonStart_Click;
             // 
             // textBoxPlayer
             // 
@@ -146,7 +160,7 @@
             // labelAccuracy
             // 
             labelAccuracy.AutoSize = true;
-            labelAccuracy.Location = new Point(743, 23);
+            labelAccuracy.Location = new Point(741, 19);
             labelAccuracy.Name = "labelAccuracy";
             labelAccuracy.Size = new Size(78, 15);
             labelAccuracy.TabIndex = 3;
@@ -155,7 +169,7 @@
             // labelSpeed
             // 
             labelSpeed.AutoSize = true;
-            labelSpeed.Location = new Point(573, 23);
+            labelSpeed.Location = new Point(571, 19);
             labelSpeed.Name = "labelSpeed";
             labelSpeed.Size = new Size(124, 15);
             labelSpeed.TabIndex = 2;
@@ -164,7 +178,7 @@
             // labelTime
             // 
             labelTime.AutoSize = true;
-            labelTime.Location = new Point(443, 23);
+            labelTime.Location = new Point(441, 19);
             labelTime.Name = "labelTime";
             labelTime.Size = new Size(75, 15);
             labelTime.TabIndex = 1;
@@ -191,12 +205,132 @@
             // 
             // tabPageSettings
             // 
+            tabPageSettings.Controls.Add(labelTexts);
+            tabPageSettings.Controls.Add(listBoxTexts);
+            tabPageSettings.Controls.Add(labelCategories);
+            tabPageSettings.Controls.Add(checkedListBoxCategories);
+            tabPageSettings.Controls.Add(groupBoxOptions);
+            tabPageSettings.Controls.Add(groupBoxLevel);
             tabPageSettings.Location = new Point(4, 24);
             tabPageSettings.Name = "tabPageSettings";
             tabPageSettings.Size = new Size(876, 533);
             tabPageSettings.TabIndex = 2;
             tabPageSettings.Text = "Настройки";
             tabPageSettings.UseVisualStyleBackColor = true;
+            // 
+            // labelTexts
+            // 
+            labelTexts.AutoSize = true;
+            labelTexts.Location = new Point(334, 197);
+            labelTexts.Name = "labelTexts";
+            labelTexts.Size = new Size(59, 15);
+            labelTexts.TabIndex = 5;
+            labelTexts.Text = "Текстове:";
+            // 
+            // listBoxTexts
+            // 
+            listBoxTexts.FormattingEnabled = true;
+            listBoxTexts.HorizontalScrollbar = true;
+            listBoxTexts.Location = new Point(334, 231);
+            listBoxTexts.Name = "listBoxTexts";
+            listBoxTexts.Size = new Size(500, 94);
+            listBoxTexts.TabIndex = 7;
+            // 
+            // labelCategories
+            // 
+            labelCategories.AutoSize = true;
+            labelCategories.Location = new Point(334, 24);
+            labelCategories.Name = "labelCategories";
+            labelCategories.Size = new Size(67, 15);
+            labelCategories.TabIndex = 4;
+            labelCategories.Text = "Категории:";
+            // 
+            // checkedListBoxCategories
+            // 
+            checkedListBoxCategories.CheckOnClick = true;
+            checkedListBoxCategories.FormattingEnabled = true;
+            checkedListBoxCategories.Location = new Point(334, 53);
+            checkedListBoxCategories.Name = "checkedListBoxCategories";
+            checkedListBoxCategories.Size = new Size(279, 94);
+            checkedListBoxCategories.TabIndex = 6;
+            checkedListBoxCategories.ItemCheck += checkedListBoxCategories_ItemCheck;
+            // 
+            // groupBoxOptions
+            // 
+            groupBoxOptions.Controls.Add(checkBoxShowErrors);
+            groupBoxOptions.Controls.Add(checkBoxCaseSensitive);
+            groupBoxOptions.Location = new Point(35, 225);
+            groupBoxOptions.Name = "groupBoxOptions";
+            groupBoxOptions.Size = new Size(229, 100);
+            groupBoxOptions.TabIndex = 3;
+            groupBoxOptions.TabStop = false;
+            groupBoxOptions.Text = "Опции";
+            // 
+            // checkBoxShowErrors
+            // 
+            checkBoxShowErrors.AutoSize = true;
+            checkBoxShowErrors.Location = new Point(6, 57);
+            checkBoxShowErrors.Name = "checkBoxShowErrors";
+            checkBoxShowErrors.Size = new Size(191, 19);
+            checkBoxShowErrors.TabIndex = 3;
+            checkBoxShowErrors.Text = "Показвай грешките в червено";
+            checkBoxShowErrors.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCaseSensitive
+            // 
+            checkBoxCaseSensitive.AutoSize = true;
+            checkBoxCaseSensitive.Checked = true;
+            checkBoxCaseSensitive.Location = new Point(6, 22);
+            checkBoxCaseSensitive.Name = "checkBoxCaseSensitive";
+            checkBoxCaseSensitive.Size = new Size(213, 19);
+            checkBoxCaseSensitive.TabIndex = 3;
+            checkBoxCaseSensitive.TabStop = true;
+            checkBoxCaseSensitive.Text = "Различавай главни и малки букви";
+            checkBoxCaseSensitive.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxLevel
+            // 
+            groupBoxLevel.Controls.Add(radioButtonHard);
+            groupBoxLevel.Controls.Add(radioButtonMedium);
+            groupBoxLevel.Controls.Add(radioButtonEasy);
+            groupBoxLevel.Location = new Point(28, 53);
+            groupBoxLevel.Name = "groupBoxLevel";
+            groupBoxLevel.Size = new Size(200, 100);
+            groupBoxLevel.TabIndex = 0;
+            groupBoxLevel.TabStop = false;
+            groupBoxLevel.Text = " Ниво";
+            // 
+            // radioButtonHard
+            // 
+            radioButtonHard.AutoSize = true;
+            radioButtonHard.Location = new Point(7, 75);
+            radioButtonHard.Name = "radioButtonHard";
+            radioButtonHard.Size = new Size(109, 19);
+            radioButtonHard.TabIndex = 2;
+            radioButtonHard.Text = "Трудно (30 сек)";
+            radioButtonHard.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonMedium
+            // 
+            radioButtonMedium.AutoSize = true;
+            radioButtonMedium.Location = new Point(6, 44);
+            radioButtonMedium.Name = "radioButtonMedium";
+            radioButtonMedium.Size = new Size(110, 19);
+            radioButtonMedium.TabIndex = 1;
+            radioButtonMedium.Text = "Средно (60 сек)";
+            radioButtonMedium.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonEasy
+            // 
+            radioButtonEasy.AutoSize = true;
+            radioButtonEasy.Checked = true;
+            radioButtonEasy.Location = new Point(6, 19);
+            radioButtonEasy.Name = "radioButtonEasy";
+            radioButtonEasy.Size = new Size(163, 19);
+            radioButtonEasy.TabIndex = 0;
+            radioButtonEasy.TabStop = true;
+            radioButtonEasy.Text = "Лесно (без ограничение)";
+            radioButtonEasy.UseVisualStyleBackColor = true;
             // 
             // timerGame
             // 
@@ -217,6 +351,12 @@
             tabPageExercise.PerformLayout();
             panelTop.ResumeLayout(false);
             panelTop.PerformLayout();
+            tabPageSettings.ResumeLayout(false);
+            tabPageSettings.PerformLayout();
+            groupBoxOptions.ResumeLayout(false);
+            groupBoxOptions.PerformLayout();
+            groupBoxLevel.ResumeLayout(false);
+            groupBoxLevel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -237,5 +377,16 @@
         private TextBox textBoxInput;
         private System.Windows.Forms.Timer timerGame;
         private Button buttonStop;
+        private GroupBox groupBoxLevel;
+        private GroupBox groupBoxOptions;
+        private RadioButton checkBoxShowErrors;
+        private RadioButton checkBoxCaseSensitive;
+        private RadioButton radioButtonHard;
+        private RadioButton radioButtonMedium;
+        private RadioButton radioButtonEasy;
+        private CheckedListBox checkedListBoxCategories;
+        private Label labelTexts;
+        private Label labelCategories;
+        private ListBox listBoxTexts;
     }
 }

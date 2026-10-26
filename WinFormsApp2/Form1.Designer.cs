@@ -1,6 +1,6 @@
 ﻿namespace WinFormsApp2
 {
-    partial class Form1
+    partial class FormTypingTrainer
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTypingTrainer));
             tabControlMain = new TabControl();
             tabPageExercise = new TabPage();
             richTextBoxTarget = new RichTextBox();
@@ -58,6 +58,8 @@
             labelCategories = new Label();
             checkedListBoxCategories = new CheckedListBox();
             groupBoxOptions = new GroupBox();
+            checkBoxShowErrors = new CheckBox();
+            checkBoxCaseSensitive = new CheckBox();
             groupBoxLevel = new GroupBox();
             radioButtonHard = new RadioButton();
             radioButtonMedium = new RadioButton();
@@ -65,8 +67,6 @@
             timerGame = new System.Windows.Forms.Timer(components);
             imageList2 = new ImageList(components);
             imageList3 = new ImageList(components);
-            checkBoxCaseSensitive = new CheckBox();
-            checkBoxShowErrors = new CheckBox();
             tabControlMain.SuspendLayout();
             tabPageExercise.SuspendLayout();
             panelTop.SuspendLayout();
@@ -404,6 +404,30 @@
             groupBoxOptions.TabStop = false;
             groupBoxOptions.Text = "Опции";
             // 
+            // checkBoxShowErrors
+            // 
+            checkBoxShowErrors.AutoSize = true;
+            checkBoxShowErrors.Checked = true;
+            checkBoxShowErrors.CheckState = CheckState.Checked;
+            checkBoxShowErrors.Location = new Point(6, 59);
+            checkBoxShowErrors.Name = "checkBoxShowErrors";
+            checkBoxShowErrors.Size = new Size(192, 19);
+            checkBoxShowErrors.TabIndex = 9;
+            checkBoxShowErrors.Text = "Показвай грешките в червено";
+            checkBoxShowErrors.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCaseSensitive
+            // 
+            checkBoxCaseSensitive.AutoSize = true;
+            checkBoxCaseSensitive.Checked = true;
+            checkBoxCaseSensitive.CheckState = CheckState.Checked;
+            checkBoxCaseSensitive.Location = new Point(6, 24);
+            checkBoxCaseSensitive.Name = "checkBoxCaseSensitive";
+            checkBoxCaseSensitive.Size = new Size(214, 19);
+            checkBoxCaseSensitive.TabIndex = 8;
+            checkBoxCaseSensitive.Text = "Различавай главни и малки букви";
+            checkBoxCaseSensitive.UseVisualStyleBackColor = true;
+            // 
             // groupBoxLevel
             // 
             groupBoxLevel.Controls.Add(radioButtonHard);
@@ -414,7 +438,7 @@
             groupBoxLevel.Size = new Size(200, 100);
             groupBoxLevel.TabIndex = 0;
             groupBoxLevel.TabStop = false;
-            groupBoxLevel.Text = " Ниво";
+            groupBoxLevel.Text = "Ниво";
             // 
             // radioButtonHard
             // 
@@ -465,40 +489,17 @@
             imageList3.ImageSize = new Size(16, 16);
             imageList3.TransparentColor = Color.Transparent;
             // 
-            // checkBoxCaseSensitive
-            // 
-            checkBoxCaseSensitive.AutoSize = true;
-            checkBoxCaseSensitive.Checked = true;
-            checkBoxCaseSensitive.CheckState = CheckState.Checked;
-            checkBoxCaseSensitive.Location = new Point(6, 24);
-            checkBoxCaseSensitive.Name = "checkBoxCaseSensitive";
-            checkBoxCaseSensitive.Size = new Size(214, 19);
-            checkBoxCaseSensitive.TabIndex = 8;
-            checkBoxCaseSensitive.Text = "Различавай главни и малки букви";
-            checkBoxCaseSensitive.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxShowErrors
-            // 
-            checkBoxShowErrors.AutoSize = true;
-            checkBoxShowErrors.Checked = true;
-            checkBoxShowErrors.CheckState = CheckState.Checked;
-            checkBoxShowErrors.Location = new Point(6, 59);
-            checkBoxShowErrors.Name = "checkBoxShowErrors";
-            checkBoxShowErrors.Size = new Size(192, 19);
-            checkBoxShowErrors.TabIndex = 9;
-            checkBoxShowErrors.Text = "Показвай грешките в червено";
-            checkBoxShowErrors.UseVisualStyleBackColor = true;
-            // 
-            // Form1
+            // FormTypingTrainer
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(884, 561);
             Controls.Add(tabControlMain);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "Form1";
+            MinimumSize = new Size(900, 600);
+            Name = "FormTypingTrainer";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Тренежор за бързо писане";
+            Text = "Тренажор за бързо писане";
             tabControlMain.ResumeLayout(false);
             tabPageExercise.ResumeLayout(false);
             tabPageExercise.PerformLayout();

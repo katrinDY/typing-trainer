@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace WinFormsApp2
 {
-    public partial class Form1 : Form
+    public partial class FormTypingTrainer : Form
     {
         private List<string> availableTexts = new List<string>();
         private List<Result> results = new List<Result>();
@@ -19,7 +19,7 @@ namespace WinFormsApp2
         private int comparedChars = 0;
         private bool textCompleted = false;
         private bool reachedLastWord = false;
-        public Form1()
+        public FormTypingTrainer()
         {
             InitializeComponent();
             textBoxInput.Enabled = false;

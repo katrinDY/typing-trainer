@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             tabControlMain = new TabControl();
             tabPageExercise = new TabPage();
             richTextBoxTarget = new RichTextBox();
@@ -42,6 +43,14 @@
             labelTime = new Label();
             labelPlayer = new Label();
             tabPageResults = new TabPage();
+            listViewResults = new ListView();
+            imageListLarge = new ImageList(components);
+            imageListSmall = new ImageList(components);
+            groupBoxView = new GroupBox();
+            buttonClearResults = new Button();
+            radioButtonList = new RadioButton();
+            radioButtonLargeIcon = new RadioButton();
+            radioButtonDetails = new RadioButton();
             tabPageSettings = new TabPage();
             labelTexts = new Label();
             listBoxTexts = new ListBox();
@@ -55,9 +64,13 @@
             radioButtonMedium = new RadioButton();
             radioButtonEasy = new RadioButton();
             timerGame = new System.Windows.Forms.Timer(components);
+            imageList2 = new ImageList(components);
+            imageList3 = new ImageList(components);
             tabControlMain.SuspendLayout();
             tabPageExercise.SuspendLayout();
             panelTop.SuspendLayout();
+            tabPageResults.SuspendLayout();
+            groupBoxView.SuspendLayout();
             tabPageSettings.SuspendLayout();
             groupBoxOptions.SuspendLayout();
             groupBoxLevel.SuspendLayout();
@@ -110,6 +123,7 @@
             textBoxInput.Location = new Point(3, 430);
             textBoxInput.Multiline = true;
             textBoxInput.Name = "textBoxInput";
+            textBoxInput.ShortcutsEnabled = false;
             textBoxInput.Size = new Size(870, 100);
             textBoxInput.TabIndex = 6;
             textBoxInput.TextChanged += textBoxInput_TextChanged;
@@ -195,6 +209,8 @@
             // 
             // tabPageResults
             // 
+            tabPageResults.Controls.Add(listViewResults);
+            tabPageResults.Controls.Add(groupBoxView);
             tabPageResults.Location = new Point(4, 24);
             tabPageResults.Name = "tabPageResults";
             tabPageResults.Padding = new Padding(3);
@@ -202,6 +218,100 @@
             tabPageResults.TabIndex = 1;
             tabPageResults.Text = "Резултати";
             tabPageResults.UseVisualStyleBackColor = true;
+            // 
+            // listViewResults
+            // 
+            listViewResults.Dock = DockStyle.Fill;
+            listViewResults.FullRowSelect = true;
+            listViewResults.GridLines = true;
+            listViewResults.LargeImageList = imageListLarge;
+            listViewResults.Location = new Point(3, 3);
+            listViewResults.MultiSelect = false;
+            listViewResults.Name = "listViewResults";
+            listViewResults.Size = new Size(690, 527);
+            listViewResults.SmallImageList = imageListSmall;
+            listViewResults.TabIndex = 4;
+            listViewResults.UseCompatibleStateImageBehavior = false;
+            listViewResults.View = View.Details;
+            // 
+            // imageListLarge
+            // 
+            imageListLarge.ColorDepth = ColorDepth.Depth32Bit;
+            imageListLarge.ImageStream = (ImageListStreamer)resources.GetObject("imageListLarge.ImageStream");
+            imageListLarge.TransparentColor = Color.Transparent;
+            imageListLarge.Images.SetKeyName(0, "0_gold_32.png");
+            imageListLarge.Images.SetKeyName(1, "1_silver_32.png");
+            imageListLarge.Images.SetKeyName(2, "2_bronze_32.png");
+            imageListLarge.Images.SetKeyName(3, "3_plain_32.png");
+            // 
+            // imageListSmall
+            // 
+            imageListSmall.ColorDepth = ColorDepth.Depth32Bit;
+            imageListSmall.ImageStream = (ImageListStreamer)resources.GetObject("imageListSmall.ImageStream");
+            imageListSmall.TransparentColor = Color.Transparent;
+            imageListSmall.Images.SetKeyName(0, "0_gold_16.png");
+            imageListSmall.Images.SetKeyName(1, "1_silver_16.png");
+            imageListSmall.Images.SetKeyName(2, "2_bronze_16.png");
+            imageListSmall.Images.SetKeyName(3, "3_plain_16.png");
+            // 
+            // groupBoxView
+            // 
+            groupBoxView.Controls.Add(buttonClearResults);
+            groupBoxView.Controls.Add(radioButtonList);
+            groupBoxView.Controls.Add(radioButtonLargeIcon);
+            groupBoxView.Controls.Add(radioButtonDetails);
+            groupBoxView.Dock = DockStyle.Right;
+            groupBoxView.Location = new Point(693, 3);
+            groupBoxView.Name = "groupBoxView";
+            groupBoxView.Size = new Size(180, 527);
+            groupBoxView.TabIndex = 0;
+            groupBoxView.TabStop = false;
+            groupBoxView.Text = "Изглед";
+            // 
+            // buttonClearResults
+            // 
+            buttonClearResults.Location = new Point(6, 110);
+            buttonClearResults.Name = "buttonClearResults";
+            buttonClearResults.Size = new Size(168, 23);
+            buttonClearResults.TabIndex = 3;
+            buttonClearResults.Text = "Изчисти класацията";
+            buttonClearResults.UseVisualStyleBackColor = true;
+            buttonClearResults.Click += buttonClearResults_Click;
+            // 
+            // radioButtonList
+            // 
+            radioButtonList.AutoSize = true;
+            radioButtonList.Location = new Point(6, 72);
+            radioButtonList.Name = "radioButtonList";
+            radioButtonList.Size = new Size(66, 19);
+            radioButtonList.TabIndex = 2;
+            radioButtonList.Text = "Списък";
+            radioButtonList.UseVisualStyleBackColor = true;
+            radioButtonList.CheckedChanged += radioButtonView_CheckedChanged;
+            // 
+            // radioButtonLargeIcon
+            // 
+            radioButtonLargeIcon.AutoSize = true;
+            radioButtonLargeIcon.Location = new Point(6, 47);
+            radioButtonLargeIcon.Name = "radioButtonLargeIcon";
+            radioButtonLargeIcon.Size = new Size(104, 19);
+            radioButtonLargeIcon.TabIndex = 1;
+            radioButtonLargeIcon.Text = "Големи икони";
+            radioButtonLargeIcon.UseVisualStyleBackColor = true;
+            radioButtonLargeIcon.CheckedChanged += radioButtonView_CheckedChanged;
+            // 
+            // radioButtonDetails
+            // 
+            radioButtonDetails.AutoSize = true;
+            radioButtonDetails.Checked = true;
+            radioButtonDetails.Location = new Point(6, 22);
+            radioButtonDetails.Name = "radioButtonDetails";
+            radioButtonDetails.Size = new Size(72, 19);
+            radioButtonDetails.TabIndex = 0;
+            radioButtonDetails.TabStop = true;
+            radioButtonDetails.Text = "Таблица";
+            radioButtonDetails.UseVisualStyleBackColor = true;
+            radioButtonDetails.CheckedChanged += radioButtonView_CheckedChanged;
             // 
             // tabPageSettings
             // 
@@ -337,6 +447,18 @@
             timerGame.Interval = 1000;
             timerGame.Tick += timerGame_Tick;
             // 
+            // imageList2
+            // 
+            imageList2.ColorDepth = ColorDepth.Depth32Bit;
+            imageList2.ImageSize = new Size(16, 16);
+            imageList2.TransparentColor = Color.Transparent;
+            // 
+            // imageList3
+            // 
+            imageList3.ColorDepth = ColorDepth.Depth32Bit;
+            imageList3.ImageSize = new Size(16, 16);
+            imageList3.TransparentColor = Color.Transparent;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -351,6 +473,9 @@
             tabPageExercise.PerformLayout();
             panelTop.ResumeLayout(false);
             panelTop.PerformLayout();
+            tabPageResults.ResumeLayout(false);
+            groupBoxView.ResumeLayout(false);
+            groupBoxView.PerformLayout();
             tabPageSettings.ResumeLayout(false);
             tabPageSettings.PerformLayout();
             groupBoxOptions.ResumeLayout(false);
@@ -388,5 +513,15 @@
         private Label labelTexts;
         private Label labelCategories;
         private ListBox listBoxTexts;
+        private ImageList imageListSmall;
+        private ImageList imageList2;
+        private ImageList imageList3;
+        private ImageList imageListLarge;
+        private ListView listViewResults;
+        private GroupBox groupBoxView;
+        private Button buttonClearResults;
+        private RadioButton radioButtonList;
+        private RadioButton radioButtonLargeIcon;
+        private RadioButton radioButtonDetails;
     }
 }

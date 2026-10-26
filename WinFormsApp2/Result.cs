@@ -12,6 +12,7 @@ namespace WinFormsApp2
         public double Accuracy { get; set; }
         public string Level { get; set; } = "";
         public DateTime Date { get; set; }
+        public double Score => Speed * Accuracy / 100;
 
         public string ToLine()
         {

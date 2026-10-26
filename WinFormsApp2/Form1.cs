@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace WinFormsApp2
 {
     public partial class Form1 : Form
@@ -16,7 +18,7 @@ namespace WinFormsApp2
         private int matchedChars = 0;
         private int comparedChars = 0;
         private bool textCompleted = false;
-
+        private bool reachedLastWord = false;
         public Form1()
         {
             InitializeComponent();
@@ -27,6 +29,60 @@ namespace WinFormsApp2
             CreateResultHeaders();
             LoadResults();
             PaintResults();
+            SetGameMode(false);
+        }
+
+        private void SetGameMode(bool running)
+        {
+            textBoxPlayer.Enabled = !running;
+            tabPageSettings.Enabled = !running;
+            buttonStart.Enabled = !running && textBoxPlayer.Text.Trim().Length > 0;
+            buttonStop.Enabled = running;
+        }
+
+        private void textBoxPlayer_TextChanged(object sender, EventArgs e)
+        {
+            bool hasName = textBoxPlayer.Text.Trim().Length > 0;
+            buttonStart.Enabled = hasName;
+            if (hasName)
+            {
+                textBoxPlayer.BackColor = SystemColors.Window;
+            }
+        }
+
+        private void textBoxPlayer_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                e.Handled = true;
+                if (buttonStart.Enabled) buttonStart.PerformClick();
+                return;
+            }
+
+            if (!char.IsLetterOrDigit(e.KeyChar) && e.KeyChar != ' ' && e.KeyChar != '-' && e.KeyChar != 8)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBoxPlayer_Validating(object sender, CancelEventArgs e)
+        {
+            if (textBoxPlayer.Text.Trim().Length == 0)
+            {
+                textBoxPlayer.BackColor = Color.MistyRose;
+            }
+        }
+
+        private void linkLabelHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show(
+                "1. Въведете име и натиснете „Старт“." + Environment.NewLine +
+                "2. Преписвайте текста в долното поле. Времето тръгва с първия клавиш." + Environment.NewLine +
+                "3. Зелено = вярна буква, червено = грешна или пропусната." + Environment.NewLine +
+                "4. Опитът свършва в края на текста, при Enter или при изтичане на времето." + Environment.NewLine +
+                "5. В „Настройки“ изберете ниво, опции и категории текстове." + Environment.NewLine +
+                "6. В „Резултати“ е класацията по точки (скорост × точност).",
+                "Помощ", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
@@ -49,6 +105,7 @@ namespace WinFormsApp2
             matchedChars = 0;
             comparedChars = 0;
             textCompleted = false;
+            reachedLastWord = false;
             started = false;
 
             if (listBoxTexts.SelectedIndex > 0)
@@ -68,6 +125,7 @@ namespace WinFormsApp2
             textBoxInput.ReadOnly = false;
             textBoxInput.Enabled = true;
 
+            SetGameMode(true);
             ColorText();
             UpdateStats();
             textBoxInput.Focus();
@@ -75,10 +133,7 @@ namespace WinFormsApp2
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            if (started)
-            {
-                EndGame("Опитът е прекъснат.", false);
-            }
+            EndGame("Опитът е прекъснат.", false);
         }
 
         private void textBoxInput_KeyPress(object sender, KeyPressEventArgs e)
@@ -92,7 +147,7 @@ namespace WinFormsApp2
             if (e.KeyChar == 13)
             {
                 e.Handled = true;
-                if (started) EndGame("Готово!");
+                if (started && reachedLastWord) EndGame("Готово!");
                 return;
             }
 
@@ -220,6 +275,7 @@ namespace WinFormsApp2
                 (map[last] < finishedWords || typedWords[map[last]].Length >= targetWords[last].Length);
 
             richTextBoxTarget.Select(0, 0);
+            reachedLastWord = map[last] >= 0;
         }
 
         private void MarkError()
@@ -353,6 +409,7 @@ namespace WinFormsApp2
             started = false;
             textBoxInput.ReadOnly = true;
             UpdateStats();
+            SetGameMode(false);
 
             if (saveResult && textBoxInput.Text.Length > 0)
             {
@@ -362,7 +419,8 @@ namespace WinFormsApp2
             MessageBox.Show(message + Environment.NewLine +
                 "Време: " + seconds + " сек" + Environment.NewLine +
                 "Скорост: " + CalculateSpeed().ToString("0") + " думи/мин" + Environment.NewLine +
-                "Точност: " + CalculateAccuracy().ToString("0") + " %",
+                "Точност: " + CalculateAccuracy().ToString("0") + " %" + Environment.NewLine +
+                "Точки: " + (CalculateSpeed() * CalculateAccuracy() / 100).ToString("0"),
                 "Резултат");
         }
 
@@ -434,9 +492,10 @@ namespace WinFormsApp2
         private void CreateResultHeaders()
         {
             listViewResults.Columns.Add("Играч", 150);
-            listViewResults.Columns.Add("Скорост", 130);
+            listViewResults.Columns.Add("Точки", 80);
+            listViewResults.Columns.Add("Скорост", 120);
             listViewResults.Columns.Add("Точност", 90);
-            listViewResults.Columns.Add("Ниво", 110);
+            listViewResults.Columns.Add("Ниво", 100);
             listViewResults.Columns.Add("Дата", 140);
         }
 
@@ -467,7 +526,7 @@ namespace WinFormsApp2
 
         private void PaintResults()
         {
-            List<Result> sorted = results.OrderByDescending(r => r.Speed).ToList();
+            List<Result> sorted = results.OrderByDescending(r => r.Score).ToList();
 
             listViewResults.BeginUpdate();
             listViewResults.Items.Clear();
@@ -477,6 +536,7 @@ namespace WinFormsApp2
                 Result r = sorted[i];
                 ListViewItem lvi = new ListViewItem(r.Player);
                 lvi.ImageIndex = (i < 3) ? i : 3;
+                lvi.SubItems.Add(r.Score.ToString("0"));
                 lvi.SubItems.Add(r.Speed.ToString("0") + " думи/мин");
                 lvi.SubItems.Add(r.Accuracy.ToString("0") + " %");
                 lvi.SubItems.Add(r.Level);

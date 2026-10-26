@@ -35,6 +35,7 @@
             richTextBoxTarget = new RichTextBox();
             textBoxInput = new TextBox();
             panelTop = new Panel();
+            linkLabelHelp = new LinkLabel();
             buttonStop = new Button();
             buttonStart = new Button();
             textBoxPlayer = new TextBox();
@@ -131,6 +132,7 @@
             // 
             // panelTop
             // 
+            panelTop.Controls.Add(linkLabelHelp);
             panelTop.Controls.Add(buttonStop);
             panelTop.Controls.Add(buttonStart);
             panelTop.Controls.Add(textBoxPlayer);
@@ -144,37 +146,58 @@
             panelTop.Size = new Size(870, 60);
             panelTop.TabIndex = 0;
             // 
+            // linkLabelHelp
+            // 
+            linkLabelHelp.AutoSize = true;
+            linkLabelHelp.Location = new Point(775, 21);
+            linkLabelHelp.Name = "linkLabelHelp";
+            linkLabelHelp.Size = new Size(50, 15);
+            linkLabelHelp.TabIndex = 6;
+            linkLabelHelp.TabStop = true;
+            linkLabelHelp.Text = "Помощ";
+            linkLabelHelp.LinkClicked += linkLabelHelp_LinkClicked;
+            // 
             // buttonStop
             // 
-            buttonStop.Location = new Point(322, 16);
+            buttonStop.Image = Properties.Resources.stop_16;
+            buttonStop.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonStop.Location = new Point(332, 16);
             buttonStop.Name = "buttonStop";
-            buttonStop.Size = new Size(75, 23);
+            buttonStop.Size = new Size(60, 24);
             buttonStop.TabIndex = 1;
             buttonStop.Text = "Стоп";
+            buttonStop.TextImageRelation = TextImageRelation.ImageBeforeText;
             buttonStop.UseVisualStyleBackColor = true;
             buttonStop.Click += buttonStop_Click;
             // 
             // buttonStart
             // 
-            buttonStart.Location = new Point(220, 15);
+            buttonStart.Image = Properties.Resources.play_16;
+            buttonStart.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonStart.Location = new Point(240, 15);
             buttonStart.Name = "buttonStart";
-            buttonStart.Size = new Size(75, 23);
+            buttonStart.Size = new Size(63, 25);
             buttonStart.TabIndex = 5;
             buttonStart.Text = "Старт";
+            buttonStart.TextImageRelation = TextImageRelation.ImageBeforeText;
             buttonStart.UseVisualStyleBackColor = true;
             buttonStart.Click += buttonStart_Click;
             // 
             // textBoxPlayer
             // 
             textBoxPlayer.Location = new Point(55, 17);
+            textBoxPlayer.MaxLength = 20;
             textBoxPlayer.Name = "textBoxPlayer";
             textBoxPlayer.Size = new Size(150, 23);
             textBoxPlayer.TabIndex = 4;
+            textBoxPlayer.TextChanged += textBoxPlayer_TextChanged;
+            textBoxPlayer.KeyPress += textBoxPlayer_KeyPress;
+            textBoxPlayer.Validating += textBoxPlayer_Validating;
             // 
             // labelAccuracy
             // 
             labelAccuracy.AutoSize = true;
-            labelAccuracy.Location = new Point(741, 19);
+            labelAccuracy.Location = new Point(665, 21);
             labelAccuracy.Name = "labelAccuracy";
             labelAccuracy.Size = new Size(78, 15);
             labelAccuracy.TabIndex = 3;
@@ -183,7 +206,7 @@
             // labelSpeed
             // 
             labelSpeed.AutoSize = true;
-            labelSpeed.Location = new Point(571, 19);
+            labelSpeed.Location = new Point(526, 20);
             labelSpeed.Name = "labelSpeed";
             labelSpeed.Size = new Size(124, 15);
             labelSpeed.TabIndex = 2;
@@ -192,7 +215,7 @@
             // labelTime
             // 
             labelTime.AutoSize = true;
-            labelTime.Location = new Point(441, 19);
+            labelTime.Location = new Point(421, 20);
             labelTime.Name = "labelTime";
             labelTime.Size = new Size(75, 15);
             labelTime.TabIndex = 1;
@@ -270,11 +293,14 @@
             // 
             // buttonClearResults
             // 
-            buttonClearResults.Location = new Point(6, 110);
+            buttonClearResults.Image = Properties.Resources.clear_16;
+            buttonClearResults.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonClearResults.Location = new Point(17, 109);
             buttonClearResults.Name = "buttonClearResults";
-            buttonClearResults.Size = new Size(168, 23);
+            buttonClearResults.Size = new Size(142, 23);
             buttonClearResults.TabIndex = 3;
             buttonClearResults.Text = "Изчисти класацията";
+            buttonClearResults.TextImageRelation = TextImageRelation.ImageBeforeText;
             buttonClearResults.UseVisualStyleBackColor = true;
             buttonClearResults.Click += buttonClearResults_Click;
             // 
@@ -339,6 +365,7 @@
             // 
             // listBoxTexts
             // 
+            listBoxTexts.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             listBoxTexts.FormattingEnabled = true;
             listBoxTexts.HorizontalScrollbar = true;
             listBoxTexts.Location = new Point(334, 231);
@@ -357,6 +384,7 @@
             // 
             // checkedListBoxCategories
             // 
+            checkedListBoxCategories.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             checkedListBoxCategories.CheckOnClick = true;
             checkedListBoxCategories.FormattingEnabled = true;
             checkedListBoxCategories.Location = new Point(334, 53);
@@ -465,6 +493,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(884, 561);
             Controls.Add(tabControlMain);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Тренежор за бързо писане";
@@ -523,5 +552,6 @@
         private RadioButton radioButtonList;
         private RadioButton radioButtonLargeIcon;
         private RadioButton radioButtonDetails;
+        private LinkLabel linkLabelHelp;
     }
 }

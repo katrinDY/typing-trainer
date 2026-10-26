@@ -58,8 +58,6 @@
             labelCategories = new Label();
             checkedListBoxCategories = new CheckedListBox();
             groupBoxOptions = new GroupBox();
-            checkBoxShowErrors = new RadioButton();
-            checkBoxCaseSensitive = new RadioButton();
             groupBoxLevel = new GroupBox();
             radioButtonHard = new RadioButton();
             radioButtonMedium = new RadioButton();
@@ -67,6 +65,8 @@
             timerGame = new System.Windows.Forms.Timer(components);
             imageList2 = new ImageList(components);
             imageList3 = new ImageList(components);
+            checkBoxCaseSensitive = new CheckBox();
+            checkBoxShowErrors = new CheckBox();
             tabControlMain.SuspendLayout();
             tabPageExercise.SuspendLayout();
             panelTop.SuspendLayout();
@@ -404,28 +404,6 @@
             groupBoxOptions.TabStop = false;
             groupBoxOptions.Text = "Опции";
             // 
-            // checkBoxShowErrors
-            // 
-            checkBoxShowErrors.AutoSize = true;
-            checkBoxShowErrors.Location = new Point(6, 57);
-            checkBoxShowErrors.Name = "checkBoxShowErrors";
-            checkBoxShowErrors.Size = new Size(191, 19);
-            checkBoxShowErrors.TabIndex = 3;
-            checkBoxShowErrors.Text = "Показвай грешките в червено";
-            checkBoxShowErrors.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxCaseSensitive
-            // 
-            checkBoxCaseSensitive.AutoSize = true;
-            checkBoxCaseSensitive.Checked = true;
-            checkBoxCaseSensitive.Location = new Point(6, 22);
-            checkBoxCaseSensitive.Name = "checkBoxCaseSensitive";
-            checkBoxCaseSensitive.Size = new Size(213, 19);
-            checkBoxCaseSensitive.TabIndex = 3;
-            checkBoxCaseSensitive.TabStop = true;
-            checkBoxCaseSensitive.Text = "Различавай главни и малки букви";
-            checkBoxCaseSensitive.UseVisualStyleBackColor = true;
-            // 
             // groupBoxLevel
             // 
             groupBoxLevel.Controls.Add(radioButtonHard);
@@ -487,6 +465,30 @@
             imageList3.ImageSize = new Size(16, 16);
             imageList3.TransparentColor = Color.Transparent;
             // 
+            // checkBoxCaseSensitive
+            // 
+            checkBoxCaseSensitive.AutoSize = true;
+            checkBoxCaseSensitive.Checked = true;
+            checkBoxCaseSensitive.CheckState = CheckState.Checked;
+            checkBoxCaseSensitive.Location = new Point(6, 24);
+            checkBoxCaseSensitive.Name = "checkBoxCaseSensitive";
+            checkBoxCaseSensitive.Size = new Size(214, 19);
+            checkBoxCaseSensitive.TabIndex = 8;
+            checkBoxCaseSensitive.Text = "Различавай главни и малки букви";
+            checkBoxCaseSensitive.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxShowErrors
+            // 
+            checkBoxShowErrors.AutoSize = true;
+            checkBoxShowErrors.Checked = true;
+            checkBoxShowErrors.CheckState = CheckState.Checked;
+            checkBoxShowErrors.Location = new Point(6, 59);
+            checkBoxShowErrors.Name = "checkBoxShowErrors";
+            checkBoxShowErrors.Size = new Size(192, 19);
+            checkBoxShowErrors.TabIndex = 9;
+            checkBoxShowErrors.Text = "Показвай грешките в червено";
+            checkBoxShowErrors.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -533,8 +535,6 @@
         private Button buttonStop;
         private GroupBox groupBoxLevel;
         private GroupBox groupBoxOptions;
-        private RadioButton checkBoxShowErrors;
-        private RadioButton checkBoxCaseSensitive;
         private RadioButton radioButtonHard;
         private RadioButton radioButtonMedium;
         private RadioButton radioButtonEasy;
@@ -553,5 +553,7 @@
         private RadioButton radioButtonLargeIcon;
         private RadioButton radioButtonDetails;
         private LinkLabel linkLabelHelp;
+        private CheckBox checkBoxCaseSensitive;
+        private CheckBox checkBoxShowErrors;
     }
 }

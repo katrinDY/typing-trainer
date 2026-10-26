@@ -65,8 +65,6 @@
             radioButtonMedium = new RadioButton();
             radioButtonEasy = new RadioButton();
             timerGame = new System.Windows.Forms.Timer(components);
-            imageList2 = new ImageList(components);
-            imageList3 = new ImageList(components);
             tabControlMain.SuspendLayout();
             tabPageExercise.SuspendLayout();
             panelTop.SuspendLayout();
@@ -477,18 +475,6 @@
             timerGame.Interval = 1000;
             timerGame.Tick += timerGame_Tick;
             // 
-            // imageList2
-            // 
-            imageList2.ColorDepth = ColorDepth.Depth32Bit;
-            imageList2.ImageSize = new Size(16, 16);
-            imageList2.TransparentColor = Color.Transparent;
-            // 
-            // imageList3
-            // 
-            imageList3.ColorDepth = ColorDepth.Depth32Bit;
-            imageList3.ImageSize = new Size(16, 16);
-            imageList3.TransparentColor = Color.Transparent;
-            // 
             // FormTypingTrainer
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -544,8 +530,6 @@
         private Label labelCategories;
         private ListBox listBoxTexts;
         private ImageList imageListSmall;
-        private ImageList imageList2;
-        private ImageList imageList3;
         private ImageList imageListLarge;
         private ListView listViewResults;
         private GroupBox groupBoxView;

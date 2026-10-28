@@ -280,11 +280,10 @@ namespace WinFormsApp2
 
         private void MarkError()
         {
+            if (!checkBoxShowErrors.Checked) return;
+
             richTextBoxTarget.SelectionColor = Color.Red;
-            if (checkBoxShowErrors.Checked)
-            {
-                richTextBoxTarget.SelectionBackColor = Color.MistyRose;
-            }
+            richTextBoxTarget.SelectionBackColor = Color.MistyRose;
         }
 
         private int[] AlignWords(string[] typed, string[] target)
